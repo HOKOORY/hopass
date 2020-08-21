@@ -1,7 +1,6 @@
 package com.hokoory.hopass.utils;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import org.apache.juli.logging.Log;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.util.StringUtils;
 
@@ -13,7 +12,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 
 public class AESUtil {
-    private static Logger log = LoggerFactory.getLogger(AESUtil.class);
     private static String gcm256algorithm = "AES/GCM/PKCS5Padding";
 
     public static String AEGCMDecrypt(String content, String keyStr) {
@@ -33,7 +31,7 @@ public class AESUtil {
             String decript = new String(decryptData);
             return decript;
         } catch (Exception e) {
-            log.error("AESGCM256解密文本处理失败,error:{}", e);
+            System.out.println("AESGCM256解密文本处理失败,error:{"+e.toString()+"}");
         }
         return null;
     }
@@ -56,7 +54,7 @@ public class AESUtil {
             System.arraycopy(encryptData, 0, message, 12, encryptData.length);
             return Base64.encodeBase64String(message);
         } catch (Exception e) {
-            log.error("AESGCM256加密文本处理失败,error:{}", e);
+            System.out.println("AESGCM256加密文本处理失败,error:{"+e.toString()+"}");
         }
         return null;
     }
@@ -71,7 +69,7 @@ public class AESUtil {
             SecretKey secretKey = generator.generateKey();
             gcmSecretKey = Base64.encodeBase64String(secretKey.getEncoded());
         } catch (NoSuchAlgorithmException e) {
-            log.error("密钥生成异常,error:", e);
+            System.out.println("密钥生成异常,error:{"+e.toString()+"}");
             return null;
         }
         return gcmSecretKey;
