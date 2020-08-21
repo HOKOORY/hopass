@@ -1,8 +1,10 @@
 package com.hokoory.hopass.utils;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-public class Sha1Util {
+public class HexEncodeUtil {
     public static String shaEncode(String inStr) throws Exception {
         MessageDigest sha = null;
         try {
@@ -24,5 +26,11 @@ public class Sha1Util {
             hexValue.append(Integer.toHexString(val));
         }
         return hexValue.toString();
+    }
+
+    public static String Md5Encode(String inStr) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(inStr.getBytes());
+        return new BigInteger(1, md.digest()).toString(16);
     }
 }

@@ -8,7 +8,7 @@ public abstract class BaseController {
         JSONObject json = new JSONObject();
         json.put("ResultCode", code);
         json.put("ErrorMsg", msg);
-        json.put("data", data);
+        json.put("Data", data);
         return json;
     }
 

@@ -7,7 +7,7 @@ import com.hokoory.hopass.pass.entity.User;
 import com.hokoory.hopass.pass.mapper.ConfigMapper;
 import com.hokoory.hopass.pass.mapper.UserMapper;
 import com.hokoory.hopass.utils.AESUtil;
-import com.hokoory.hopass.utils.Sha1Util;
+import com.hokoory.hopass.utils.HexEncodeUtil;
 import com.hokoory.hopass.utils.StringUtil;
 import com.hokoory.hopass.utils.XORUtils;
 import net.sf.json.JSONObject;
@@ -54,7 +54,7 @@ public class UserController extends BaseController {
         String user_pass = user.getPassword();
         String user_salt = user.getSalt();
         try {
-            sha1pass = Sha1Util.shaEncode(password + user_salt);
+            sha1pass = HexEncodeUtil.Md5Encode(password + user_salt);
         } catch (Exception e) {
             return error(-1, e.getMessage(), "");
         }
@@ -77,7 +77,7 @@ public class UserController extends BaseController {
         String salt = StringUtil.randomString(4);
         String sha1_pass = "";
         try {
-            sha1_pass = Sha1Util.shaEncode(password + salt);
+            sha1_pass = HexEncodeUtil.Md5Encode(password + salt);
         } catch (Exception e) {
             return error(-1, e.getMessage(), "");
         }
