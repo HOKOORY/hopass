@@ -19,13 +19,15 @@ public class Test {
     UserMapper userMapper;
     @Autowired
     RedisTemplate<String, Serializable> redisTemplate;
+    @Autowired
+    RedisTemplate<String, Object> objectRedisTemplate;
 
     @RequestMapping("/test")
     public Object test() {
         String key = "user:1";
         User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name", "admin"));
-        redisTemplate.opsForValue().set(key, user);
-        User user1 = (User) redisTemplate.opsForValue().get(key);
+        objectRedisTemplate.opsForValue().set(key, user);
+        User user1 = (User) objectRedisTemplate.opsForValue().get(key);
         return XORUtils.decrypt(user1.getKeygen().getBytes(), (user1.getId() + user1.getUserName()).getBytes());
 //        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name","admin"));
     }
