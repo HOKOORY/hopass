@@ -2,6 +2,7 @@ package com.hokoory.hopass.pass.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hokoory.hopass.pass.entity.Config;
+import com.hokoory.hopass.pass.entity.Response;
 import com.hokoory.hopass.pass.entity.User;
 import com.hokoory.hopass.pass.mapper.UserMapper;
 import com.hokoory.hopass.utils.XORUtils;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 
 @RestController
-public class Test extends BaseController{
+public class Test{
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -29,7 +30,7 @@ public class Test extends BaseController{
         Map<String, String> map = new HashMap<>();
         map.put("id", "17");
         User user = userMapper.getUserInPass(map);
-        return success(user);
+        return new Response<>(user);
 //        String key = "user:1";
 //        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name", "admin"));
 //        objectRedisTemplate.opsForValue().set(key, user);

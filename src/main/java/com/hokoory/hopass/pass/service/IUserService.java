@@ -15,9 +15,8 @@ import java.util.Map;
  * @since 2020-08-05
  */
 public interface IUserService extends IService<User> {
-    UserToken getUserByUsername(Map<String,String> map);
-    int updateUserBySignUp(User user);
-    int insertUserBySignUp(User user);
-    User getUserInPass(Map<String,String> map);
+    UserToken login(String username,String password);
+    User signup(String username,String password);
+    Map<String,String> canSignUp();
 
 }
