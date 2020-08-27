@@ -2,7 +2,10 @@ package com.hokoory.hopass.pass.mapper;
 
 import com.hokoory.hopass.pass.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hokoory.hopass.pass.entity.UserToken;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -14,5 +17,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-
+    UserToken getUserByUsername(Map<String,String> map);
+    int updateUserBySignUp(User user);
+    int insertUserBySignUp(User user);
+    User getUserInPass(Map<String,String> map);
 }

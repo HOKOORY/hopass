@@ -11,7 +11,7 @@ public class CheckRedisConnectionJob {
     @Autowired
     RedisServiceImpl redisService;
 
-    @Scheduled(cron = "*/60 * * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     public void checkRedisConnectionJob() {
         try {
             redisService.checkConnection();

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
-public class Test {
+public class Test extends BaseController{
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -24,11 +26,15 @@ public class Test {
 
     @RequestMapping("/test")
     public Object test() {
-        String key = "user:1";
-        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name", "admin"));
-        objectRedisTemplate.opsForValue().set(key, user);
-        User user1 = (User) objectRedisTemplate.opsForValue().get(key);
-        return XORUtils.decrypt(user1.getKeygen().getBytes(), (user1.getId() + user1.getUserName()).getBytes());
+        Map<String, String> map = new HashMap<>();
+        map.put("id", "17");
+        User user = userMapper.getUserInPass(map);
+        return success(user);
+//        String key = "user:1";
+//        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name", "admin"));
+//        objectRedisTemplate.opsForValue().set(key, user);
+//        User user1 = (User) objectRedisTemplate.opsForValue().get(key);
+//        return XORUtils.decrypt(user1.getKeygen().getBytes(), (user1.getId() + user1.getUserName()).getBytes());
 //        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name","admin"));
     }
 }

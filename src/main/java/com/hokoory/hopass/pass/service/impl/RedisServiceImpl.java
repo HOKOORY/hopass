@@ -17,7 +17,7 @@ public class RedisServiceImpl implements IRedisService {
 
     @Override
     public boolean checkConnection() {
-        boolean flag = false;
+        boolean flag;
         RedisConnectionFactory redisConnectionFactory = objectRedisTemplate.getConnectionFactory();
         try {
             RedisConnection redisConnection = redisConnectionFactory.getConnection();

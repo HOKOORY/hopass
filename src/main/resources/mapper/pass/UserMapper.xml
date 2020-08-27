@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hokoory.hopass.pass.mapper.UserMapper">
+    <select id="getUserByUsername" resultType="com.hokoory.hopass.pass.entity.UserToken">
+        select * from user where user_name = #{user_name} limit 1
+    </select>
+    <update id="updateUserBySignUp" parameterType="com.hokoory.hopass.pass.entity.User">
+        update user set keygen = #{keygen} where user_name = #{userName}
+    </update>
+    <insert id="insertUserBySignUp" parameterType="com.hokoory.hopass.pass.entity.User" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into user(user_name,password,salt,create_time) value (#{userName},#{password},#{salt},#{createTime})
+    </insert>
 
+    <!--    一对多-->
+    <resultMap id="UserPassMap" type="com.hokoory.hopass.pass.entity.User">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <collection property="repassword" ofType="com.hokoory.hopass.pass.entity.Password" column="user_id">
+            <id property="id" column="pass_id" javaType="int" jdbcType="INTEGER"/>
+            <result property="title" column="title" javaType="String" jdbcType="VARCHAR"/>
+            <result property="context" column="context" javaType="String" jdbcType="VARCHAR"/>
+            <result property="web" column="web" javaType="String" jdbcType="VARCHAR"/>
+            <result property="account" column="account" javaType="String" jdbcType="VARCHAR"/>
+            <result property="password" column="password" javaType="String" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" javaType="int" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <select id="getUserInPass" resultMap="UserPassMap">
+        select u.id,u.user_name,p.id as pass_id,p.*
+        from user u , password p
+        where u.id = p.user_id
+        and u.id = #{id}
+    </select>
 </mapper>

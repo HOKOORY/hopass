@@ -1,16 +1,14 @@
 package com.hokoory.hopass.pass.service.impl;
 
 import com.hokoory.hopass.pass.service.ITokenService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.slf4j.ILoggerFactory;
+import com.hokoory.hopass.utils.HexEncodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.RedisConnectionFailureException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.TimeUnit;
+
 
 @Service
 public class TokenServiceImpl implements ITokenService {
@@ -19,20 +17,23 @@ public class TokenServiceImpl implements ITokenService {
 
     @Override
     public String generatorToken(String str) {
-
-        return null;
+        String token = "";
+        try {
+            token = HexEncodeUtil.Md5Encode(str);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return token;
     }
 
     @Override
-    public String setToken(String key, Object value) {
-
-        return null;
+    public void setToken(String key, Object value) {
+        objectRedisTemplate.opsForValue().set(key, value,7200, TimeUnit.SECONDS);
     }
 
     @Override
-    public String getToken(String key) {
-
-        return null;
+    public Object getToken(String key) {
+        return objectRedisTemplate.opsForValue().get(key);
     }
 
 }

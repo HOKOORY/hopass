@@ -1,6 +1,7 @@
 package com.hokoory.hopass.pass.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -48,5 +49,5 @@ public class User implements Serializable {
 
     private Integer createTime;
 
-
+    private List<Password> repassword;
 }
