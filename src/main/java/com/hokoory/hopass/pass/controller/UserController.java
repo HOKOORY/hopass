@@ -35,10 +35,6 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController  {
     @Autowired
-    UserMapper userMapper;
-    @Autowired
-    ConfigMapper configMapper;
-    @Autowired
     ITokenService tokenService;
     @Autowired
     UserServiceImpl userService;

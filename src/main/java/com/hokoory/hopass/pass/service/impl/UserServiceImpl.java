@@ -41,7 +41,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     TokenServiceImpl tokenService;
 
-
     @Override
     public UserToken login(String username,String password) {
         Map<String, String> map = new HashMap<>();
