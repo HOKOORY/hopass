@@ -6,7 +6,6 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Response<T> implements Serializable {
     private static final long serialVersionUID = -4505655308965878999L;
 
