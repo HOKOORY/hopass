@@ -96,6 +96,21 @@
             <version>3.10.0</version>
         </dependency>
         <!--集成okhttp3 end-->
+        <!--ActiveMq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+            <version>2.3.4.RELEASE</version>
+        </dependency>
+        <!--ActiveMq end-->
+        <!--消息队列连接池-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>5.9.1</version>
+        </dependency>
+        <!--消息队列连接池 end-->
+
     </dependencies>
 
     <build>
