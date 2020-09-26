@@ -1,15 +1,11 @@
 package com.hokoory.hopass.pass.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.hokoory.hopass.pass.entity.Config;
 import com.hokoory.hopass.pass.entity.Response;
 import com.hokoory.hopass.pass.entity.User;
 import com.hokoory.hopass.pass.mapper.UserMapper;
-import com.hokoory.hopass.utils.XORUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -25,8 +21,49 @@ public class Test{
     @Autowired
     RedisTemplate<String, Object> objectRedisTemplate;
 
-    @RequestMapping("/test")
+    @RequestMapping(value = "/test")
     public Object test() {
+
+//        int x = 71;
+//        int[] arr = {1,2,3,4};
+//        for(int i = 0;i<arr.length;i++){
+//            if(x == arr[i]){
+//                return i;
+//            }
+//        }
+//        return -1;
+
+
+//        int sum=0;
+//        int n[] = {1,2,3,4,5};
+//        System.out.println(n.length);
+//        for(int i=1;i<n.length;i++){
+//            sum = sum+n[i];
+//        }
+//        System.out.println("sum="+sum);
+//        return null;
+
+//        String name = "";
+//        String password = "";
+//        try{
+//            List<User> list = findBySQL("select * from user where phone = ? or username = ?",name,name);
+//            if (list.size() > 0){
+//                for (User user : list) {
+//                    if (user.getpassword == md5(password)){
+//                        return 1;
+//                    }
+//                }
+//                return -2;
+//            }else {
+//                return -1;
+//            }
+//        }catch (Exception e){
+//          return  -3;
+//        }
+
+
+
+
         Map<String, String> map = new HashMap<>();
         map.put("id", "17");
         User user = userMapper.getUserInPass(map);
