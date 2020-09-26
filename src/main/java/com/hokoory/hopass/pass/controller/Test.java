@@ -68,9 +68,10 @@ public class Test{
         map.put("id", "17");
         User user = userMapper.getUserInPass(map);
         return new Response<>(user);
+
 //        String key = "user:1";
 //        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name", "admin"));
-//        objectRedisTemplate.opsForValue().set(key, user);
+//        objectRedisTempl ate.opsForValue().set(key, user);
 //        User user1 = (User) objectRedisTemplate.opsForValue().get(key);
 //        return XORUtils.decrypt(user1.getKeygen().getBytes(), (user1.getId() + user1.getUserName()).getBytes());
 //        User user = userMapper.selectOne(new QueryWrapper<User>().eq("user_name","admin"));
