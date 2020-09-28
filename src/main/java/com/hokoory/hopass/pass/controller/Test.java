@@ -7,6 +7,7 @@ import com.hokoory.hopass.pass.mapper.UserMapper;
 import com.hokoory.hopass.utils.XORUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jms.Queue;
@@ -28,6 +29,8 @@ public class Test {
     private Queue queue;
     @Autowired
     private Topic topic;
+    @Autowired
+    private JmsMessagingTemplate jmsMessagingTemplate;
 
     @RequestMapping(value = "/test")
     public Object test() {
@@ -51,6 +54,9 @@ public class Test {
         String XORDecode = new String(XORUtils.decrypt(user1.getKeygen().getBytes(), (user1.getId() + user1.getUserName()).getBytes()));
         return XORDecode;
         */
+
+        jmsMessagingTemplate.convertAndSend(this.topic,"我是你爹");
+        jmsMessagingTemplate.convertAndSend(this.queue,"我是你爸");
         return null;
     }
 }
