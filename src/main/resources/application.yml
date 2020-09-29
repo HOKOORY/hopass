@@ -37,6 +37,9 @@ spring:
       idle-timeout: 30000
     packages:
       trust-all: true
+  data:
+    mongodb:
+      uri: mongodb+srv://hokoory:HEjiale5201314@cluster0.fyrww.azure.mongodb.net/ho?retryWrites=true&w=majority
 # Mybatis 配置
 mybatis:
   mapper-locations: classpath:/**/*.xml
