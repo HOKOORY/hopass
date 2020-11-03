@@ -25,6 +25,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         list.add("/user/login");
         list.add("/user/cansignup");
         list.add("/user/signup");
+        list.add("/test/**");
         registration.excludePathPatterns(list);
     }
 }
