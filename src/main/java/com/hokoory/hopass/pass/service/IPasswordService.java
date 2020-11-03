@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-08-21
  */
 public interface IPasswordService extends IService<Password> {
-
+    public int insertPassword(Password password);
+    public Password getPassword(Password password);
 }

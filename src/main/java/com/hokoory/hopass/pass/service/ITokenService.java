@@ -5,5 +5,7 @@ public interface ITokenService {
 
     void setToken(String key, Object value);
 
+    void setToken(String key, Object value,long tiemout);
+
     Object getToken(String key);
 }

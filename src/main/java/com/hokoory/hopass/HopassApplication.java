@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@ImportResource(locations = {"classpath:web.xml"})
 @EnableJms
 public class HopassApplication {
 

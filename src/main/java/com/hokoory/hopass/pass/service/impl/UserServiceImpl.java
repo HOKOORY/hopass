@@ -64,14 +64,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (!MD5pass.equals(user_pass)) {
             throw new UserException(ErrorCodeAndMsg.User_password_error);
         }
-        user.setPassword("");
-        user.setSalt("");
-        user.setKeygen("");
         // 生成token
         String token = tokenService.generatorToken(user.getId() + user.getUserName() + StringUtil.randomString(12));
         // 设置token
         user.setToken(token);
         tokenService.setToken(token, user);
+        user.setKeygen("");
+        user.setPassword("");
+        user.setSalt("");
         return user;
     }
 

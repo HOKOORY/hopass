@@ -1,6 +1,9 @@
 package com.hokoory.hopass.pass.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,11 +20,12 @@ import lombok.EqualsAndHashCode;
 public class Password implements Serializable {
 
     private static final long serialVersionUID=1L;
+    @TableId(type = IdType.INPUT)
     private Integer id;
     /**
      * 所属用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 标题
