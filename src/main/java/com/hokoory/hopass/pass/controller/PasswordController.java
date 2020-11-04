@@ -5,6 +5,7 @@ import com.hokoory.hopass.pass.entity.Password;
 import com.hokoory.hopass.pass.entity.Response;
 import com.hokoory.hopass.pass.entity.User;
 import com.hokoory.hopass.pass.mapper.PasswordMapper;
+import com.hokoory.hopass.pass.service.impl.PasswordServiceImpl;
 import com.hokoory.hopass.pass.service.impl.TokenServiceImpl;
 import com.hokoory.hopass.utils.AESUtil;
 import com.hokoory.hopass.utils.XORUtils;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -27,11 +29,11 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/pass")
-public class PasswordController{
-    @Autowired
-    PasswordMapper passwordMapper;
+public class PasswordController {
     @Autowired
     TokenServiceImpl tokenService;
+    @Autowired
+    PasswordServiceImpl passwordService;
 
     @RequestMapping("/set")
     public Response setPassword(@RequestParam(name = "title") String title,
@@ -53,7 +55,7 @@ public class PasswordController{
         passwordEntity.setWeb(web);
         passwordEntity.setUserId(user.getId());
         passwordEntity.setUpdateTime(time);
-        int id = passwordMapper.insertPassword(passwordEntity);
+        int id = passwordService.insertPassword(passwordEntity);
 
         return new Response(id);
     }
@@ -61,15 +63,19 @@ public class PasswordController{
     @RequestMapping("/getlist")
     public Response getPasswordList(@RequestHeader(name = "token") String token) {
         User user = (User) tokenService.getToken(token);
-
-        return null;
+        List<Password> passwordList = passwordService.getPasswordList(String.valueOf(user.getId()));
+        return new Response(passwordList);
     }
+
     @RequestMapping("/getdetail")
     public Response getPasswordDetail(@RequestParam(name = "id") String id,
-            @RequestHeader(name = "token") String token) {
+                                      @RequestHeader(name = "token") String token) {
         User user = (User) tokenService.getToken(token);
-
-        return null;
+        Password password = passwordService.getPasswordDetail(id);
+        String keygen = new String(XORUtils.decrypt(user.getKeygen().getBytes(), (user.getId() + user.getUserName()).getBytes()));
+        String pass = AESUtil.AEGCMDecrypt(password.getPassword(), keygen);
+        password.setPassword(pass);
+        return new Response(password);
     }
 }
 
