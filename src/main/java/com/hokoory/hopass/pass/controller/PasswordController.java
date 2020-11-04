@@ -36,7 +36,7 @@ public class PasswordController {
     PasswordServiceImpl passwordService;
 
     @RequestMapping("/set")
-    public Response setPassword(@RequestParam(name = "title") String title,
+    public Response<Object> setPassword(@RequestParam(name = "title") String title,
                                 @RequestParam(name = "context") String context,
                                 @RequestParam(name = "web") String web,
                                 @RequestParam(name = "account") String account,
@@ -56,26 +56,25 @@ public class PasswordController {
         passwordEntity.setUserId(user.getId());
         passwordEntity.setUpdateTime(time);
         int id = passwordService.insertPassword(passwordEntity);
-
-        return new Response(id);
+        return new Response<>(id);
     }
 
     @RequestMapping("/getlist")
-    public Response getPasswordList(@RequestHeader(name = "token") String token) {
+    public Response<List<Password>> getPasswordList(@RequestHeader(name = "token") String token) {
         User user = (User) tokenService.getToken(token);
         List<Password> passwordList = passwordService.getPasswordList(String.valueOf(user.getId()));
-        return new Response(passwordList);
+        return new Response<>(passwordList);
     }
 
     @RequestMapping("/getdetail")
-    public Response getPasswordDetail(@RequestParam(name = "id") String id,
+    public Response<Password> getPasswordDetail(@RequestParam(name = "id") String id,
                                       @RequestHeader(name = "token") String token) {
         User user = (User) tokenService.getToken(token);
         Password password = passwordService.getPasswordDetail(id);
         String keygen = new String(XORUtils.decrypt(user.getKeygen().getBytes(), (user.getId() + user.getUserName()).getBytes()));
         String pass = AESUtil.AEGCMDecrypt(password.getPassword(), keygen);
         password.setPassword(pass);
-        return new Response(password);
+        return new Response<>(password);
     }
 }
 

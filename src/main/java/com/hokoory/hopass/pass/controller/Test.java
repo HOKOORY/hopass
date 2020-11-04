@@ -45,18 +45,18 @@ public class Test {
         return new Response<>(user);
         */
 
-        /*
+
         //测试redis
         //测试 XOR加解密
-        String key = "user:1";
-        Map<String, String> map = new HashMap<>();
-        map.put("user_name", "admin");
-        User user = userMapper.getUserByUsername(map);
-        objectRedisTemplate.opsForValue().set(key, user);
-        User user1 = (User) objectRedisTemplate.opsForValue().get(key);
-        String XORDecode = new String(XORUtils.decrypt(user1.getKeygen().getBytes(), (user1.getId() + user1.getUserName()).getBytes()));
-        return XORDecode;
-        */
+//        String key = "user:17";
+//        Map<String, String> map = new HashMap<>();
+//        map.put("user_name", "admin");
+//        User user = userMapper.getUserByUsername(map);
+//        objectRedisTemplate.opsForValue().set(key, user);
+//        User user1 = (User) objectRedisTemplate.opsForValue().get(key);
+//        String XORDecode = new String(XORUtils.decrypt(user1.getKeygen().getBytes(), (user1.getId() + user1.getUserName()).getBytes()));
+//        return XORDecode;
+
 
         /*
         // activeMQ 测试
