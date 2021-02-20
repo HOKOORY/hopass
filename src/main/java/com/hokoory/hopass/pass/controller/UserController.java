@@ -8,6 +8,7 @@ import com.hokoory.hopass.pass.entity.UserToken;
 import com.hokoory.hopass.pass.mapper.ConfigMapper;
 import com.hokoory.hopass.pass.mapper.UserMapper;
 import com.hokoory.hopass.pass.service.ITokenService;
+import com.hokoory.hopass.pass.service.impl.TokenServiceImpl;
 import com.hokoory.hopass.pass.service.impl.UserServiceImpl;
 import com.hokoory.hopass.utils.AESUtil;
 import com.hokoory.hopass.utils.HexEncodeUtil;
@@ -35,7 +36,7 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController  {
     @Autowired
-    ITokenService tokenService;
+    TokenServiceImpl tokenService;
     @Autowired
     UserServiceImpl userService;
 

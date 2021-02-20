@@ -5,19 +5,15 @@ import com.hokoory.hopass.pass.entity.Response;
 import com.hokoory.hopass.pass.entity.TestMongoDB;
 import com.hokoory.hopass.pass.entity.User;
 import com.hokoory.hopass.pass.mapper.UserMapper;
+import com.hokoory.hopass.pass.service.IAsyncService;
 import com.hokoory.hopass.utils.XORUtils;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
+//import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jms.Queue;
-import javax.jms.Topic;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
 
 @RestController
 public class Test {
@@ -27,16 +23,21 @@ public class Test {
     RedisTemplate<String, Serializable> redisTemplate;
     @Autowired
     RedisTemplate<String, Object> objectRedisTemplate;
+//    @Autowired
+//    private Queue queue;
+//    @Autowired
+//    private Topic topic;
+//    @Autowired
+//    private JmsMessagingTemplate jmsMessagingTemplate;
+
+//    @Autowired
+//    private MongoTemplate mongoTemplate;
+
     @Autowired
-    private Queue queue;
-    @Autowired
-    private Topic topic;
-    @Autowired
-    private JmsMessagingTemplate jmsMessagingTemplate;
-    @Autowired
-    private MongoTemplate mongoTemplate;
-    @RequestMapping(value = "/test/{id}")
-    public Object test(@PathVariable(name = "id") String id) {
+    private IAsyncService asyncService;
+
+    @RequestMapping(value = "/test")
+    public Object test(@RequestParam(value = "id", required = false, defaultValue = "1") int id) {
         /*
         //测试一对多
         Map<String, String> map = new HashMap<>();
@@ -58,14 +59,12 @@ public class Test {
 //        return XORDecode;
 
 
-        /*
-        // activeMQ 测试
-        jmsMessagingTemplate.convertAndSend(this.topic,"我是你爹");
-        jmsMessagingTemplate.convertAndSend(this.queue,"我是你爸");
-        */
-        TestMongoDB testMongoDB = new TestMongoDB(id,"test"+id+id);
-        mongoTemplate.save(testMongoDB);
-        TestMongoDB res = mongoTemplate.findById(id,TestMongoDB.class);
-        return res;
+//        TestMongoDB testMongoDB = new TestMongoDB(id+"","test"+id+id);
+//        mongoTemplate.save(testMongoDB);
+//        TestMongoDB res = mongoTemplate.findById(id,TestMongoDB.class);
+        for (int ii = 0; ii <= 10; ii++) {
+            asyncService.executoAsync();
+        }
+        return id;
     }
 }

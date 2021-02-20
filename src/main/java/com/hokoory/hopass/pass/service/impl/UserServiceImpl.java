@@ -7,6 +7,8 @@ import com.hokoory.hopass.pass.entity.UserToken;
 import com.hokoory.hopass.pass.enums.ErrorCodeAndMsg;
 import com.hokoory.hopass.pass.mapper.ConfigMapper;
 import com.hokoory.hopass.pass.mapper.UserMapper;
+import com.hokoory.hopass.pass.service.IAsyncService;
+import com.hokoory.hopass.pass.service.ITokenService;
 import com.hokoory.hopass.pass.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hokoory.hopass.utils.AESUtil;
@@ -18,14 +20,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author hokoory
@@ -40,12 +45,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     ConfigMapper configMapper;
     @Autowired
     TokenServiceImpl tokenService;
+    @Autowired
+    private AsyncTask asyncTask;
 
     @Override
-    public UserToken login(String username,String password) {
-        Map<String, String> map = new HashMap<>();
+    public UserToken login(String username, String password) {
+        Map<String, String> map = new HashMap<>(1);
         map.put("user_name", username);
         UserToken user = userMapper.getUserByUsername(map);
+        /**
+         * 尝试使用多线程获取
+         * Future<UserToken> task_user;
+        Future<String> task_md5;
+        UserToken user;
+        try {
+            task_user = asyncTask.getUserInfo(map);
+        } catch (InterruptedException e) {
+            throw new UserException(ErrorCodeAndMsg.Unknow_error);
+        }
+        while (true) {
+            if (task_user.isDone()) {
+                try {
+                    user = task_user.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new UserException(ErrorCodeAndMsg.Unknow_error);
+                }
+                break;
+            }
+        }*/
         if (user == null) {
             throw new UserException(ErrorCodeAndMsg.User_input_fail);
         }
@@ -61,6 +88,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } catch (Exception e) {
             throw new UserException(ErrorCodeAndMsg.Unknow_error);
         }
+        /**
+         * 尝试使用多线程
+        try {
+            task_md5 = asyncTask.MD5encrypt(password + user_salt);
+        } catch (InterruptedException e) {
+            throw new UserException(ErrorCodeAndMsg.Unknow_error);
+        }
+        while (true) {
+            if (task_md5.isDone()) {
+                try {
+                    MD5pass = task_md5.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new UserException(ErrorCodeAndMsg.Unknow_error);
+                }
+                break;
+            }
+        }
+        */
+
         if (!MD5pass.equals(user_pass)) {
             throw new UserException(ErrorCodeAndMsg.User_password_error);
         }
@@ -77,7 +123,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     @Override
-    public User signup(String username,String password) {
+    public User signup(String username, String password) {
         Map<String, String> map = new HashMap<>();
         map.put("user_name", username);
         User user = userMapper.getUserByUsername(map);
@@ -119,17 +165,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Map<String,String> canSignUp() {
+    public Map<String, String> canSignUp() {
         HashMap<String, String> map = new HashMap<>();
         map.put("key", "cansignup");
         Config config = configMapper.getOneConfigByKey(map);
-        Map<String,String> resMap = new HashMap<>();
+        Map<String, String> resMap = new HashMap<>();
         if ("0".equals(config.getConfigValue())) {
-            resMap.put("is_can","0");
-            resMap.put("msg","不允许注册账号");
+            resMap.put("is_can", "0");
+            resMap.put("msg", "不允许注册账号");
         } else if ("1".equals(config.getConfigValue())) {
-            resMap.put("is_can","1");
-            resMap.put("msg","允许注册账号");
+            resMap.put("is_can", "1");
+            resMap.put("msg", "允许注册账号");
         } else {
             throw new UserException(ErrorCodeAndMsg.Network_error);
         }

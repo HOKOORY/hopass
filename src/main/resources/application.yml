@@ -3,7 +3,7 @@ server:
 spring:
   # mysql配置
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/ho_pass?characterEncoding=utf-8&useSSL=true&serverTimezone=GMT
+    url: jdbc:mysql://127.0.0.1:3306/hopass?characterEncoding=utf-8&useSSL=true&serverTimezone=GMT
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,26 +20,9 @@ spring:
         max-idle: 8
         min-idle: 0
     database: 0
-  # activeMQ配置
-  activemq:
-    broker-url: tcp://127.0.0.1:61616
-    user: admin
-    password: admin
-    close-timeout: 15s
-    in-memory: true
-    non-blocking-redelivery: false
-    send-timeout: 0
-    queue-name: active.queue
-    topic-name: active.topic.name.model
-    pool:
-      enabled: true
-      max-connections: 10
-      idle-timeout: 30000
-    packages:
-      trust-all: true
-  data:
-    mongodb:
-      uri: mongodb+srv://hokoory:HEjiale5201314@cluster0.fyrww.azure.mongodb.net/ho?retryWrites=true&w=majority
+#  data:
+#    mongodb:
+#      uri: mongodb+srv://hokoory:HEjiale5201314@cluster0.fyrww.azure.mongodb.net/ho?retryWrites=true&w=majority
 # Mybatis 配置
 mybatis:
   mapper-locations: classpath:/**/*.xml
