@@ -24,14 +24,16 @@ public class AESUtil {
 
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] message = Base64.decodeBase64(content);
-            if (message.length < 12 + 16) throw new IllegalArgumentException();
+            if (message.length < 12 + 16) {
+                throw new IllegalArgumentException();
+            }
             GCMParameterSpec params = new GCMParameterSpec(128, message, 0, 12);
             cipher.init(Cipher.DECRYPT_MODE, key, params);
             byte[] decryptData = cipher.doFinal(message, 12, message.length - 12);
             String decript = new String(decryptData);
             return decript;
         } catch (Exception e) {
-            System.out.println("AESGCM256解密文本处理失败,error:{"+e.toString()+"}");
+            System.out.println("AESGCM256解密文本处理失败,error:{" + e.toString() + "}");
         }
         return null;
     }
@@ -54,7 +56,7 @@ public class AESUtil {
             System.arraycopy(encryptData, 0, message, 12, encryptData.length);
             return Base64.encodeBase64String(message);
         } catch (Exception e) {
-            System.out.println("AESGCM256加密文本处理失败,error:{"+e.toString()+"}");
+            System.out.println("AESGCM256加密文本处理失败,error:{" + e.toString() + "}");
         }
         return null;
     }
@@ -69,7 +71,7 @@ public class AESUtil {
             SecretKey secretKey = generator.generateKey();
             gcmSecretKey = Base64.encodeBase64String(secretKey.getEncoded());
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("密钥生成异常,error:{"+e.toString()+"}");
+            System.out.println("密钥生成异常,error:{" + e.toString() + "}");
             return null;
         }
         return gcmSecretKey;

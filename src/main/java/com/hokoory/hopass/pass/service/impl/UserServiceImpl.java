@@ -139,12 +139,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } catch (Exception e) {
             throw new UserException(ErrorCodeAndMsg.Unknow_error);
         }
-        User iuser = new User();
-        iuser.setUserName(username);
-        iuser.setPassword(MD5_pass);
-        iuser.setSalt(salt);
-        iuser.setCreateTime((int) (new Date().getTime() / 1000));
-        userMapper.insertUserBySignUp(iuser);
+        User iUser = new User();
+        iUser.setUserName(username);
+        iUser.setPassword(MD5_pass);
+        iUser.setSalt(salt);
+        iUser.setCreateTime((int) (new Date().getTime() / 1000));
+        userMapper.insertUserBySignUp(iUser);
 //        userMapper.insert(iuser);
 //        user = userMapper.selectOne(queryWrapper);
         // 生成genkey 用于aes加密用户的密码
@@ -153,15 +153,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new UserException(ErrorCodeAndMsg.User_signup_error);
         }
         // 异或加密， 密钥是 id + username
-        iuser.setKeygen(new String(XORUtils.encrypt(genkey.getBytes(), (iuser.getId() + iuser.getUserName()).getBytes())));
+        iUser.setKeygen(new String(XORUtils.encrypt(genkey.getBytes(), (iUser.getId() + iUser.getUserName()).getBytes())));
         // 密钥二次加密保存在数据库
-        userMapper.updateUserBySignUp(iuser);
+        userMapper.updateUserBySignUp(iUser);
 //        userMapper.update(iuser, queryWrapper);
         // 将关键信息取消绑定
-        iuser.setKeygen("");
-        iuser.setSalt("");
-        iuser.setPassword("");
-        return iuser;
+        iUser.setKeygen("");
+        iUser.setSalt("");
+        iUser.setPassword("");
+        return iUser;
     }
 
     @Override
