@@ -32,8 +32,8 @@ public class TokenServiceImpl implements ITokenService {
     }
 
     @Override
-    public void setToken(String key, Object value, long tiemout) {
-        objectRedisTemplate.opsForValue().set(key, value,tiemout, TimeUnit.SECONDS);
+    public void setToken(String key, Object value, long timeout) {
+        objectRedisTemplate.opsForValue().set(key, value,timeout, TimeUnit.SECONDS);
     }
 
     @Override
