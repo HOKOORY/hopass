@@ -20,8 +20,9 @@ spring:
         max-idle: 8
         min-idle: 0
     database: 0
-#  data:
-#    mongodb:
+  data:
+    mongodb:
+      uri: mongodb+srv://hokoory:HEjiale5201314@cluster0.fyrww.mongodb.net/test
 #      uri: mongodb+srv://hokoory:HEjiale5201314@cluster0.fyrww.azure.mongodb.net/ho?retryWrites=true&w=majority
 # Mybatis 配置
 mybatis:

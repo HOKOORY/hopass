@@ -12,7 +12,7 @@ public class AsyncServiceImpl implements IAsyncService {
 
     @Override
     @Async("asyncServiceExecutor")
-    public void executoAsync() {
+    public void executorAsync() {
         logger.info("start executoAsync");
         logger.info("end executeAsync");
     }

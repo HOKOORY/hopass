@@ -10,10 +10,12 @@ import com.hokoory.hopass.utils.XORUtils;
 import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @RestController
 public class Test {
@@ -30,8 +32,8 @@ public class Test {
 //    @Autowired
 //    private JmsMessagingTemplate jmsMessagingTemplate;
 
-//    @Autowired
-//    private MongoTemplate mongoTemplate;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private IAsyncService asyncService;
@@ -59,12 +61,14 @@ public class Test {
 //        return XORDecode;
 
 
-//        TestMongoDB testMongoDB = new TestMongoDB(id+"","test"+id+id);
+//        TestMongoDB testMongoDB = new TestMongoDB(id + "", "test" + id + id);
 //        mongoTemplate.save(testMongoDB);
-//        TestMongoDB res = mongoTemplate.findById(id,TestMongoDB.class);
+//        TestMongoDB res = mongoTemplate.findById(id + "", TestMongoDB.class);
+//        List<TestMongoDB> list = mongoTemplate.findAll(TestMongoDB.class);
         for (int ii = 0; ii <= 10; ii++) {
-            asyncService.executoAsync();
+            asyncService.executorAsync();
+//            System.out.println("afs");
         }
-        return id;
+        return 1;
     }
 }

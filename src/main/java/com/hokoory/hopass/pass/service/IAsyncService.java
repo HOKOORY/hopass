@@ -4,5 +4,5 @@ public interface IAsyncService {
     /**
      * 执行异步任务
      */
-    void executoAsync();
+    void executorAsync();
 }
